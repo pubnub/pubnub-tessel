@@ -1,0 +1,20 @@
+== PubNub Tessel.io Examples ==
+
+Welcome! We're here to get you started quickly with your
+integration between PubNub and Tessel.io. PubNub makes it
+easy to integrate real-time bidirectional communication
+into your distributed application.
+
+* make sure node.js is installed from http://nodejs.org
+* install tessel command-line tools with `npm install tessel`
+* install PubNub library using `npm install pubnub`
+* make sure the Tessel device is connected via USB
+* ensure the device shows up via the command `tessel list`
+* ensure the device firmware is up-to-date using `tessel update`
+* give the device connectivity using `tessel wifi -n NETID -p NETPASS -s wpa2` (or whatever wifi info is appropriate for your location)
+* change to the examples directory using `cd examples`
+* try out the 'disconnected_blinky.js' example using `tessel run disconnected_blinky.js`
+* try out the "LED blink client" using `tessel run pubnub_blink_client.js tesseldemo`
+* send a message to the LED blink client using `node pubnub_blink_server.hs tesseldemo hello`
+
+
