@@ -31,8 +31,8 @@
           return PUBNUB.publish({
             channel: channel,
             message: {
-              light: light_args,
-              sound: sound_args
+              temperature: temp_args,
+              humidity: humid_args
             }
           });
         });
