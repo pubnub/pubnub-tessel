@@ -1,4 +1,3 @@
-fs = require 'fs'
 tessel  = require 'tessel'
 audiolib = require 'audio-vs1053b'
 audio = audiolib.use tessel.port['B']
