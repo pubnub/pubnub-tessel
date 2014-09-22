@@ -1,3 +1,7 @@
+###
+This script uses Port 'D'.
+Port 'D' is one of the recommended ports for the climate module.
+###
 tessel = require 'tessel'
 climatelib = require 'climate-si7020'
 climate = climatelib.use(tessel.port['D'])
