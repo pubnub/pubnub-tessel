@@ -6,7 +6,9 @@
 
   cameralib = require('camera-vc0706');
 
-  camera = cameralib.use(tessel.port['A']);
+  camera = cameralib.use(tessel.port['B'], {
+    resolution: 'qqvga'
+  });
 
   channel = process.argv[2];
 
@@ -23,24 +25,22 @@
     });
     console.log("camera ready");
     notificationLED.high();
-    return camera.setResolution('qqvga', function() {
-      return camera.takePicture(function(err, image) {
-        var image_string;
-        if (err) {
-          console.log('error taking image', err);
-        } else {
-          notificationLED.low();
-          image_string = image.toString('hex');
-          console.log("sending image", image_string);
-          PUBNUB.publish({
-            channel: channel,
-            message: {
-              image: image_string
-            }
-          });
-        }
-        return camera.disable();
-      });
+    return camera.takePicture(function(err, image) {
+      var image_string;
+      if (err) {
+        console.log('error taking image', err);
+      } else {
+        notificationLED.low();
+        image_string = image.toString('hex');
+        console.log("sending image", image_string);
+        PUBNUB.publish({
+          channel: channel,
+          message: {
+            image: image_string
+          }
+        });
+      }
+      return camera.disable();
     });
   });
 
