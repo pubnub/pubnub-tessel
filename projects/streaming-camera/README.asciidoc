@@ -1,0 +1,9 @@
+
+AngularJS UI is HERE:
+
+* http://codepen.io/sunnygleason/pen/GlbdD
+
+Sensor code is in camera-server.js
+
+Enjoy!
+

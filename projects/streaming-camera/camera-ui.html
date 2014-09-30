@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+  <script src="https://cdn.pubnub.com/pubnub-crypto.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  <script src="http://pubnub.github.io/pubnub-angular/lib/pubnub-angular.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" ng-app="PubNubAngularApp" ng-controller="ChatCtrl">
+  
+<h4>Online Devices</h4>
+<ul>
+  <li ng-repeat="(uuid, data) in devices">
+    <img ng-src="{{data.image}}" />
+    <br />
+    <b>{{data.uuid}}</b>
+    <br />
+    {{data.ts}}
+  </li>
+</ul>
+
+</div>
+
+<script>
+//
+// Set Up Your Angular Module & Controller(s)
+//
+angular.module('PubNubAngularApp', ["pubnub.angular.service"])
+.controller('ChatCtrl', function($rootScope, $scope, $location, PubNub) {
+  $scope.devices = {};
+
+  // make up a channel name
+  $scope.channel  = 'tesseldemo';
+
+  if (!$rootScope.initialized) {
+    // Initialize the PubNub service
+    PubNub.init({
+      subscribe_key: 'demo',
+      publish_key: 'demo'
+    });
+    $rootScope.initialized = true;
+  }
+
+  // Subscribe to the Channel
+  PubNub.ngSubscribe({ channel: $scope.channel });
+
+  // Register for message events
+  $rootScope.$on(PubNub.ngMsgEv($scope.channel), function(ngEvent, payload) {
+    $scope.$apply(function() {
+      if (payload.message.uuid) {
+        $scope.devices[payload.message.uuid] = payload.message;
+      }
+    });
+  });
+  
+  // Populate message history (optional)
+  PubNub.ngHistory({
+    channel: $scope.channel,
+    count: 500
+  });
+});
+</script>
+</body>
+</html>
